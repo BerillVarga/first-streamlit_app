@@ -2,5 +2,5 @@
 import streamlit
 
 # Streamlit title
-streamlit.title('Mel\'s Parents Healthy Diner')
+streamlit.title('Mel\'s Parents\' Healthy Diner')
 
