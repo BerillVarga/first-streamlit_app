@@ -77,4 +77,4 @@ streamlit.dataframe(my_data_rows)
 
 ## Creating text entry box
 fruit_to_add = streamlit.text_input('What fruit would you like to add?', 'Kiwi')
-streamlit.write('Thank you for adding', fruit_choice)
+streamlit.write('Thank you for adding', fruit_to_add)
