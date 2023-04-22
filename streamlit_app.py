@@ -67,10 +67,10 @@ my_cur = my_cnx.cursor()
 my_cur.execute("SELECT * FROM fruit_load_list")
 
 ## Fetching one (the first) row of the result set
-my_data_row = my_cur.fetchone()
+my_data_rows = my_cur.fetchall()
 
 ## Creating header to display
 streamlit.header("The fruit load list constains:")
 
 ## Creating table to display
-streamlit.dataframe(my_data_row)
+streamlit.dataframe(my_data_rows)
