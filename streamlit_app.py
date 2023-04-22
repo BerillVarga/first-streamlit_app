@@ -57,9 +57,20 @@ streamlit.dataframe(fruityvice_normalized)
 
 
 # Selecting date from Snowflake
+## Creating connection with Snowflake
 my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
+
+## Creating a cursor
 my_cur = my_cnx.cursor()
+
+## Querying data from database
 my_cur.execute("SELECT * FROM fruit_load_list")
+
+## Fetching one (the first) row of the result set
 my_data_row = my_cur.fetchone()
-streamlit.text("The fruit load list constains:")
-streamlit.text(my_data_row)
+
+## Creating header to display
+streamlit.header("The fruit load list constains:")
+
+## Creating table to display
+streamlit.dataframe(my_data_row)
