@@ -73,6 +73,7 @@ except URLError as e:
 ## Creating header to display
 streamlit.header("The fruit load list constains:")
 
+
 ## Snowflake-related function
 def get_fruit_load_list():
   
@@ -81,7 +82,8 @@ def get_fruit_load_list():
     my_cur.execute("SELECT * FROM fruit_load_list")
     
     return my_cur.fetchall()
- 
+
+
 ## Adding a button to load the fruit
 if streamlit.button('Get Fruit Load List'):
   ## Creating connection with Snowflake
@@ -92,25 +94,24 @@ if streamlit.button('Get Fruit Load List'):
   streamlit.dataframe(my_data_rows)
 
 
-streamlit.stop()
-# Selecting date from Snowflake
+## Allowing the end user to add fruits to the list
+def insert_row_snowflake(new_fruit):
+  
+  with my_cnx.cursor() as my_cur:
+    ## Adding new fruit to the list
+    my_cur.execute("INSERT INTO fruit_load_list VALUES ('from streamlit');")
+    
+    return 'Thanks for adding ' + new_fruit
+ 
 
+## Reading in a new user input
+add_my_fruit = streamlit.text_input('What fruit would you like to add?')
 
-## Creating a cursor
-my_cur = my_cnx.cursor()
+if streamlit.button('Add a Fruit to the List'):
+  ## Creating connection with Snowflake
+  my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
+  ## Inserting new row with function
+  back_from_funtion = insert_row_snowflake(add_my_fruit)
+  ## Displaying feedback text to user
+  streamlit.text(back_from_funtion)
 
-
-
-## Fetching one (the first) row of the result set
-my_data_rows = my_cur.fetchall()
-
-
-
-
-
-## Creating text entry box
-fruit_to_add = streamlit.text_input('What fruit would you like to add?', 'Kiwi')
-streamlit.write('Thank you for adding', fruit_to_add)
-
-## Adding new fruit to the list
-my_cur.execute("INSERT INTO fruit_load_list VALUES ('from streamlit');")
